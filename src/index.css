@@ -1,10 +1,11 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 40% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -13,7 +14,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 210 100% 50%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -34,21 +35,11 @@
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --piano-white: 0 0% 100%;
+    --piano-black: 240 10% 3.9%;
+    --piano-active: 210 100% 50%;
+    --piano-correct: 142.1 76.2% 36.3%;
+    --piano-incorrect: 0 84.2% 60.2%;
   }
 
   .dark {
@@ -61,7 +52,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 210 100% 50%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
@@ -79,14 +70,12 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --piano-white: 0 0% 100%;
+    --piano-black: 240 10% 3.9%;
+    --piano-active: 210 100% 50%;
+    --piano-correct: 142.1 76.2% 36.3%;
+    --piano-incorrect: 0 62.8% 30.6%;
   }
 }
 
@@ -96,6 +85,92 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('https://fonts.cdnfonts.com/css/sf-pro-display') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
+@layer components {
+  .piano-container {
+    @apply relative mx-auto max-w-5xl overflow-hidden rounded-lg bg-white shadow-lg;
+  }
+
+  .piano-white-key {
+    @apply relative flex h-36 flex-1 cursor-pointer items-end justify-center rounded-b-md bg-piano-white px-2 pb-2 text-xs font-medium text-gray-400 shadow-md transition-all duration-75;
+  }
+
+  .piano-black-key {
+    @apply absolute top-0 z-10 flex h-24 w-8 -translate-x-1/2 cursor-pointer items-end justify-center rounded-b-md bg-piano-black px-2 pb-2 text-xs font-medium text-gray-200 shadow-lg transition-all duration-75;
+  }
+
+  .piano-white-key.active {
+    @apply bg-piano-active text-white;
+  }
+
+  .piano-black-key.active {
+    @apply bg-piano-active text-white;
+  }
+
+  .piano-white-key.correct {
+    @apply bg-piano-correct text-white;
+  }
+
+  .piano-black-key.correct {
+    @apply bg-piano-correct text-white;
+  }
+
+  .piano-white-key.incorrect {
+    @apply bg-piano-incorrect text-white;
+  }
+
+  .piano-black-key.incorrect {
+    @apply bg-piano-incorrect text-white;
+  }
+
+  .music-sheet {
+    @apply relative mx-auto mb-8 flex h-32 max-w-5xl items-center justify-start overflow-hidden rounded-lg bg-white p-4 shadow-md;
+  }
+
+  .music-note {
+    @apply flex h-16 w-16 flex-col items-center justify-center rounded-full bg-secondary p-2 text-center font-medium shadow-sm transition-all duration-300;
+  }
+
+  .control-panel {
+    @apply mx-auto mb-8 flex max-w-md flex-col items-center justify-center gap-4 rounded-lg bg-white p-6 shadow-md;
+  }
+
+  .glass-panel {
+    @apply rounded-lg bg-white/80 shadow-md backdrop-blur-md;
+  }
+
+  .button-primary {
+    @apply rounded-md bg-primary px-4 py-2 font-medium text-white shadow-sm transition-all hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .button-secondary {
+    @apply rounded-md bg-secondary px-4 py-2 font-medium text-secondary-foreground shadow-sm transition-all hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+  
+  .accuracy-badge {
+    @apply inline-flex items-center rounded-full bg-secondary px-3 py-1 text-xs font-medium;
+  }
+  
+  .accuracy-badge.high {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .accuracy-badge.medium {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .accuracy-badge.low {
+    @apply bg-red-100 text-red-800;
   }
 }
