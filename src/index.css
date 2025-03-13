@@ -99,15 +99,15 @@
 
 @layer components {
   .piano-container {
-    @apply relative mx-auto max-w-5xl overflow-hidden rounded-lg bg-white shadow-lg;
+    @apply relative w-full mx-auto max-w-6xl overflow-hidden rounded-lg bg-white shadow-lg;
   }
 
   .piano-white-key {
-    @apply relative flex h-36 flex-1 cursor-pointer items-end justify-center rounded-b-md bg-piano-white px-2 pb-2 text-xs font-medium text-gray-400 shadow-md transition-all duration-75;
+    @apply relative flex h-48 flex-1 cursor-pointer items-end justify-center rounded-b-md bg-piano-white px-2 pb-3 text-sm font-medium text-gray-400 shadow-md transition-all duration-75;
   }
 
   .piano-black-key {
-    @apply absolute top-0 z-10 flex h-24 w-8 -translate-x-1/2 cursor-pointer items-end justify-center rounded-b-md bg-piano-black px-2 pb-2 text-xs font-medium text-gray-200 shadow-lg transition-all duration-75;
+    @apply absolute top-0 z-10 flex h-32 w-10 -translate-x-1/2 cursor-pointer items-end justify-center rounded-b-md bg-piano-black px-2 pb-3 text-sm font-medium text-gray-200 shadow-lg transition-all duration-75;
   }
 
   .piano-white-key.active {

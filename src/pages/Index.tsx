@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from 'react';
 import PianoKeyboard from '@/components/Piano/PianoKeyboard';
 import MusicSheet from '@/components/MusicSheet/MusicSheet';
@@ -67,7 +68,7 @@ const Index = () => {
       const resetSheet = musicSheet.map((note, index) => ({
         ...note,
         status: index === 0 ? 'current' : 'waiting',
-      }));
+      })) as MusicNote[]; // Add explicit type cast here
       
       setMusicSheet(resetSheet);
       setCurrentNoteIndex(0);
@@ -102,12 +103,12 @@ const Index = () => {
         setMusicSheet(prev => 
           prev.map((note, i) => {
             if (i === index) {
-              return { ...note, status: 'current' };
+              return { ...note, status: 'current' } as MusicNote;
             } else if (i < index) {
               // Keep previous statuses (correct/incorrect/missed)
               return note;
             } else {
-              return { ...note, status: 'waiting' };
+              return { ...note, status: 'waiting' } as MusicNote;
             }
           })
         );
@@ -122,7 +123,7 @@ const Index = () => {
         setMusicSheet(prev => 
           prev.map(note => {
             if (note.status === 'waiting' || note.status === 'current') {
-              return { ...note, status: 'missed' };
+              return { ...note, status: 'missed' } as MusicNote;
             }
             return note;
           })
@@ -151,7 +152,7 @@ const Index = () => {
             return { 
               ...n, 
               status: isCorrect ? 'correct' : 'incorrect' 
-            };
+            } as MusicNote;
           }
           return n;
         })
@@ -166,7 +167,7 @@ const Index = () => {
         setMusicSheet(prev => 
           prev.map((n, i) => {
             if (i === nextIndex) {
-              return { ...n, status: 'current' };
+              return { ...n, status: 'current' } as MusicNote;
             }
             return n;
           })
